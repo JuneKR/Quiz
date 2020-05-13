@@ -1,68 +1,65 @@
 <template>
   <div id="app">
-    <Header 
-      :numCorrect="numCorrect"
-      :numTotal="numTotal"
-    />
-      <b-container class="bv-example-row">
-        <b-row>
-          <b-col col sm="6" offset="3">
-            <QuestionBox 
-              v-if="questions.length > 0"
-              :currentQuestion="questions[index]"
-              v-bind:next="next"
-              v-bind:increment="increment"
-            />
-          </b-col>
-        </b-row>
+    <Header :numCorrect="numCorrect" :numTotal="numTotal" />
+    <b-container class="bv-example-row">
+      <b-row>
+        <b-col col sm="6" offset="3">
+          <QuestionBox
+            v-if="questions.length > 0"
+            :currentQuestion="questions[index]"
+            v-bind:next="next"
+            v-bind:increment="increment"
+          />
+        </b-col>
+      </b-row>
     </b-container>
   </div>
 </template>
 
 <script>
-import Header from './components/Header'
-import QuestionBox from './components/QuestionBox'
+import Header from "./components/Header";
+import QuestionBox from "./components/QuestionBox";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     Header,
     QuestionBox
   },
-  data(){
+  data() {
     return {
       questions: [],
       index: 0,
       numCorrect: 0,
       numTotal: 0
-    }
+    };
   },
   methods: {
-    next(){
-      this.index++
+    next() {
+      this.index++;
     },
-    increment(isCorrect){
-      if(isCorrect){
-        this.numCorrect++
+    increment(isCorrect) {
+      if (isCorrect) {
+        this.numCorrect++;
       }
-      this.numTotal++
+      this.numTotal++;
     }
   },
-  mounted: function(){
-    fetch('https://opentdb.com/api.php?amount=10&category=27&type=multiple', {
-      method: 'get'
+  mounted: function() {
+    fetch("https://opentdb.com/api.php?amount=10&category=27&type=multiple", {
+      method: "get"
     })
-    .then(res => res.json())
-    .then(data => {
-      this.questions = data.results
-    })
+      .then(res => res.json())
+      .then(data => {
+        this.questions = data.results;
+      });
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
